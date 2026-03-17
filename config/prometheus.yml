@@ -21,5 +21,7 @@ scrape_configs:
   - job_name: scrap_node
     static_configs:
       - targets: ['node_orders:3000']
-
+  - job_name: scrap_docker
+    static_configs:
+      - targets: ['cadvisor:8080']
   

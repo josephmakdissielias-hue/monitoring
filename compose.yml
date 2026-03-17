@@ -71,6 +71,31 @@ services:
     networks:
       - monitoring
 
+  cadvisor:
+    container_name: cadvisor
+    hostname: cadvisor
+    image: gcr.io/cadvisor/cadvisor:latest
+    ports:
+      - 8081:8080
+    networks:
+      - monitoring
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+
+  alertManager:
+    container_name: alert-manager
+    hostname: alert-manager
+    image: prom/alertmanager:latest
+    ports:
+      - 9093:9093
+    networks:
+      - monitoring
+    volumes:
+      - ./config/alertmanager.yml:/etc/alertmanager/alertmanager.yml
 networks:
   monitoring:
 
