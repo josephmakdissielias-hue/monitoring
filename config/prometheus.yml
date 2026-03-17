@@ -24,4 +24,11 @@ scrape_configs:
   - job_name: scrap_docker
     static_configs:
       - targets: ['cadvisor:8080']
-  
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ['alert-manager:9093']
+
+rule_files:
+  - cpu_too_high.rule.yml

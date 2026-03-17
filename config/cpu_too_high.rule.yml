@@ -1,0 +1,12 @@
+groups:
+  - name: CPU_TOO_HIGH
+    rules:
+      - alert: Cpu too high
+        # somme de tous les process cpu de tous les conteneurs docker
+        expr: sum(rate(container_cpu_usage_seconds_total{name=~".+"}[1m]) * 100) > 5
+        for: 1m
+        labels:
+          severity: info
+        annotations:
+          summary: "CPU usage is above 10%"
+          description: "CPU bla bla bla ..."
