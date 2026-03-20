@@ -1,0 +1,35 @@
+# recevoir les données depuis les applications
+receivers:
+  otlp:
+    protocols:
+      http:
+        endpoint: 0.0.0.0:4318
+      grpc:
+        endpoint: 0.0.0.0:4317
+
+# envoyer les données à loki
+exporters:
+  otlphttp/loki:
+    endpoint: http://loki:3100/otlp
+    tls:
+      insecure: true
+
+  otlphttp/tempo:
+    endpoint: http://tempo:4317
+    default_labels_enabled:
+    tls:
+      insecure: true
+
+processors: 
+  batch:
+
+service:
+  pipelines:
+    logs:
+      receivers: [otlp]
+      exporters: [otlphttp/loki]
+      processors: [batch]
+    traces:
+      receivers: [otlp]
+      exporters: [otlphttp/tempo]
+      processors: [batch]
