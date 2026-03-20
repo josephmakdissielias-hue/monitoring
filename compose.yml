@@ -7,7 +7,7 @@ services:
       - 9090:9090
     volumes:
       - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
-      - ./config/cpu_too_high.rule.yml:/etc/prometheus/prometheus.yml
+      - ./config/cpu_too_high.rule.yml:/etc/prometheus/cpu_too_high.rule.yml
     networks:
       - monitoring
   mssql:
@@ -97,6 +97,7 @@ services:
       - monitoring
     volumes:
       - ./config/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+
 networks:
   monitoring:
 
